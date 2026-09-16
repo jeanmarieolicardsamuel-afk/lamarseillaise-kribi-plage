@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kribi La Marseillaise — Grillades au bord de mer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C1917;
+    --ink-soft:#2A2620;
+    --cream:#F2ECDD;
+    --cream-dim:#E4DCC6;
+    --brick:#8C3B2E;
+    --brick-light:#B85940;
+    --gold:#B8892E;
+    --olive:#3D4A3A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Work Sans', sans-serif;
+    background:var(--ink);
+    color:var(--cream);
+    line-height:1.6;
+    font-weight:300;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces', serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 40px;
+    background:rgba(28,25,23,0.85);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(242,236,221,0.08);
+  }
+  .logo{font-family:'Fraunces', serif;font-size:22px;font-weight:500;letter-spacing:0.3px;}
+  .navlinks{display:flex;gap:36px;font-size:14px;}
+  .navlinks a{opacity:0.8;transition:opacity 0.2s;}
+  .navlinks a:hover{opacity:1;}
+  .nav-cta{
+    padding:9px 20px;border:1px solid var(--gold);border-radius:2px;
+    font-size:13px;color:var(--gold);
+  }
+  .menu-toggle{display:none;background:none;border:none;color:var(--cream);font-size:26px;cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:140px 40px 80px;
+    position:relative;
+    background:
+      radial-gradient(ellipse at 75% 25%, rgba(140,59,46,0.35), transparent 55%),
+      var(--ink);
+    overflow:hidden;
+  }
+  .hero-eyebrow{
+    font-size:14px;color:var(--gold);letter-spacing:0.5px;margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(48px, 9vw, 108px);
+    font-weight:500;
+    line-height:0.98;
+    max-width:920px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{font-style:italic;font-weight:300;color:var(--brick-light);}
+  .hero p.sub{
+    max-width:480px;font-size:18px;color:var(--cream-dim);margin-top:28px;font-weight:300;
+  }
+  .hero-actions{display:flex;gap:20px;margin-top:44px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--brick);color:var(--cream);padding:16px 32px;
+    font-size:15px;border-radius:2px;border:1px solid var(--brick);
+    transition:background 0.2s;
+  }
+  .btn-primary:hover{background:var(--brick-light);}
+  .btn-ghost{
+    padding:16px 28px;font-size:15px;border:1px solid rgba(242,236,221,0.35);border-radius:2px;
+  }
+  .hero-note{
+    position:absolute;right:40px;bottom:60px;max-width:220px;
+    font-size:13px;color:var(--cream-dim);border-left:1px solid var(--gold);padding-left:16px;
+  }
+  @media(max-width:780px){ .hero-note{display:none;} }
+
+  /* SIGNATURE STRIP */
+  .strip{
+    background:var(--brick);color:var(--cream);
+    padding:16px 0;overflow:hidden;white-space:nowrap;
+    border-top:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.15);
+  }
+  .strip-inner{display:inline-flex;gap:48px;animation:scroll 32s linear infinite;font-family:'Fraunces',serif;font-size:15px;font-style:italic;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* ABOUT */
+  .about{
+    padding:120px 0;background:var(--cream);color:var(--ink);
+  }
+  .about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:start;}
+  @media(max-width:820px){ .about-grid{grid-template-columns:1fr;gap:36px;} }
+  .about-label{font-size:13px;color:var(--brick);margin-bottom:14px;}
+  .about h2{font-size:clamp(30px,4vw,44px);font-weight:500;line-height:1.15;max-width:380px;}
+  .about-text{font-size:16px;color:#4A453D;max-width:480px;}
+  .about-text p + p{margin-top:18px;}
+  .stat-row{display:flex;gap:48px;margin-top:40px;flex-wrap:wrap;}
+  .stat b{display:block;font-family:'Fraunces',serif;font-size:34px;color:var(--brick);font-weight:500;}
+  .stat span{font-size:13px;color:#6B655A;}
+
+  /* MENU */
+  .menu-section{padding:120px 0;background:var(--ink);}
+  .menu-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:64px;}
+  .menu-head h2{font-size:clamp(32px,5vw,52px);font-weight:500;}
+  .menu-head p{max-width:320px;color:var(--cream-dim);font-size:15px;}
+  .menu-cols{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  @media(max-width:780px){ .menu-cols{grid-template-columns:1fr;gap:48px;} }
+  .menu-cat{font-family:'Fraunces',serif;font-style:italic;font-size:20px;color:var(--gold);margin-bottom:26px;padding-bottom:10px;border-bottom:1px solid rgba(184,137,46,0.3);}
+  .menu-item{display:flex;align-items:baseline;gap:10px;margin-bottom:24px;}
+  .menu-item .name{font-size:17px;font-weight:400;white-space:nowrap;}
+  .menu-item .dots{flex:1;border-bottom:1px dotted rgba(242,236,221,0.25);transform:translateY(-5px);}
+  .menu-item .price{font-family:'Fraunces',serif;font-size:16px;color:var(--gold);white-space:nowrap;}
+  .menu-item .desc{display:block;font-size:13px;color:var(--cream-dim);margin-top:3px;font-weight:300;}
+
+  /* GALLERY */
+  .gallery{padding:0 0 120px;background:var(--ink);}
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+  @media(max-width:780px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
+  .gcell{
+    aspect-ratio:1;position:relative;overflow:hidden;
+  }
+  .gcell img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gcell .cap{
+    position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
+    background:linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+    font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--cream);
+  }
+  .gcell.wide{grid-column:span 2;}
+
+  /* TESTIMONIALS */
+  .testi{padding:120px 0;background:var(--cream);color:var(--ink);}
+  .testi-wrap{max-width:720px;margin:0 auto;text-align:center;}
+  .testi blockquote{
+    font-family:'Fraunces',serif;font-size:clamp(22px,3.4vw,32px);font-weight:400;line-height:1.35;
+  }
+  .testi cite{display:block;margin-top:28px;font-style:normal;font-size:14px;color:#6B655A;}
+
+  /* RESERVATION */
+  .reserve{padding:120px 0;background:var(--brick);color:var(--cream);}
+  .reserve-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;}
+  @media(max-width:820px){ .reserve-grid{grid-template-columns:1fr;} }
+  .reserve h2{font-size:clamp(30px,4vw,46px);font-weight:500;max-width:360px;}
+  .reserve p{margin-top:18px;color:rgba(242,236,221,0.85);max-width:380px;font-size:15px;}
+  .hours{margin-top:36px;font-size:14px;}
+  .hours div{display:flex;justify-content:space-between;max-width:280px;padding:8px 0;border-bottom:1px solid rgba(242,236,221,0.15);}
+  form{display:grid;gap:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:520px){ .form-row{grid-template-columns:1fr;} }
+  label{font-size:12px;color:rgba(242,236,221,0.75);display:block;margin-bottom:6px;}
+  input,select,textarea{
+    width:100%;background:rgba(242,236,221,0.08);border:1px solid rgba(242,236,221,0.25);
+    color:var(--cream);padding:12px 14px;font-family:'Work Sans',sans-serif;font-size:14px;border-radius:2px;
+  }
+  input::placeholder,textarea::placeholder{color:rgba(242,236,221,0.4);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);}
+  textarea{resize:vertical;min-height:80px;}
+  .form-submit{
+    background:var(--ink);color:var(--cream);border:none;padding:15px 28px;
+    font-size:14px;border-radius:2px;cursor:pointer;margin-top:6px;transition:background 0.2s;
+  }
+  .form-submit:hover{background:var(--ink-soft);}
+  .form-note{font-size:12px;color:rgba(242,236,221,0.6);margin-top:4px;}
+
+  /* MAP / LOCATION */
+  .location{padding:100px 0;background:var(--ink);}
+  .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(242,236,221,0.1);}
+  @media(max-width:780px){ .loc-grid{grid-template-columns:1fr;} }
+  .loc-info{padding:56px;}
+  .loc-info h3{font-size:26px;font-weight:500;margin-bottom:18px;}
+  .loc-info p{font-size:14px;color:var(--cream-dim);margin-bottom:8px;}
+  .loc-map{
+    background:
+      repeating-linear-gradient(0deg, rgba(184,137,46,0.06) 0px, rgba(184,137,46,0.06) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(184,137,46,0.06) 0px, rgba(184,137,46,0.06) 1px, transparent 1px, transparent 40px),
+      var(--ink-soft);
+    display:flex;align-items:center;justify-content:center;min-height:280px;position:relative;
+  }
+  .pin{width:14px;height:14px;background:var(--brick);border-radius:50% 50% 50% 0;transform:rotate(-45deg);position:relative;}
+  .pin::after{content:'';position:absolute;inset:3px;background:var(--cream);border-radius:50%;}
+
+  /* FOOTER */
+  footer{padding:64px 0 32px;background:var(--ink);border-top:1px solid rgba(242,236,221,0.08);}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;}
+  .foot-col h4{font-size:14px;margin-bottom:14px;color:var(--gold);}
+  .foot-col a,.foot-col p{display:block;font-size:14px;color:var(--cream-dim);margin-bottom:8px;}
+  .foot-bottom{margin-top:56px;padding-top:24px;border-top:1px solid rgba(242,236,221,0.08);display:flex;justify-content:space-between;font-size:12px;color:rgba(242,236,221,0.4);flex-wrap:wrap;gap:10px;}
+
+  @media(max-width:780px){
+    .navlinks{display:none;}
+    .menu-toggle{display:block;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Kribi La Marseillaise</div>
+  <div class="navlinks">
+    <a href="#apropos">L'histoire</a>
+    <a href="#menu">Menu</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#reserver">Réserver</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#reserver" class="nav-cta">Réserver une table</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap" style="padding:0;">
+    <div class="hero-eyebrow">Kribi · Grillades face à l'océan</div>
+    <h1>Le feu de bois,<br>les pieds dans le <em>sable</em>.</h1>
+    <p class="sub">Poissons et fruits de mer grillés à la minute, servis à l'ombre des cocotiers, à quelques pas des vagues de Kribi.</p>
+    <div class="hero-actions">
+      <a href="#reserver" class="btn-primary">Réserver une table</a>
+      <a href="#menu" class="btn-ghost">Voir le menu</a>
+    </div>
+  </div>
+  <div class="hero-note">Ouvert tous les jours, directement sur la plage de Kribi.</div>
+</header>
+
+<div class="strip">
+  <div class="strip-inner">
+    <span>Poisson braisé au feu de bois</span><span>·</span><span>Crevettes grillées</span><span>·</span><span>Gambas</span><span>·</span><span>Plantain à la poêle</span><span>·</span><span>Jus de noix de coco</span><span>·</span>
+    <span>Poisson braisé au feu de bois</span><span>·</span><span>Crevettes grillées</span><span>·</span><span>Gambas</span><span>·</span><span>Plantain à la poêle</span><span>·</span><span>Jus de noix de coco</span><span>·</span>
+  </div>
+</div>
+
+<section class="about" id="apropos">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <div class="about-label">Notre histoire</div>
+        <h2>Un feu de bois allumé chaque matin, face à la mer.</h2>
+      </div>
+      <div>
+        <div class="about-text">
+          <p>Kribi La Marseillaise est tenue par un homme du village qui grille du poisson sur cette même plage depuis des années. Chaque matin, les pêcheurs ramènent leur prise directement sur le sable, et elle part sur le feu de bois quelques heures plus tard.</p>
+          <p>Ici, pas de carte compliquée : juste du poisson et des fruits de mer frais, grillés simplement, servis les pieds dans le sable, comme on le fait en famille à Kribi depuis toujours.</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>100%</b><span>Poisson du jour</span></div>
+          <div class="stat"><b>7/7</b><span>Jours d'ouverture</span></div>
+          <div class="stat"><b>1</b><span>Adresse, face à l'océan</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="menu-head">
+      <h2>La carte</h2>
+      <p>Une sélection courte, renouvelée chaque semaine selon le marché.</p>
+    </div>
+    <div class="menu-cols">
+      <div>
+        <div class="menu-cat">Poissons & fruits de mer grillés</div>
+        <div class="menu-item">
+          <span class="name">Poisson braisé au feu de bois<span class="desc">Pêche du jour, épices maison</span></span>
+          <span class="dots"></span><span class="price">6 000</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Crevettes grillées<span class="desc">Marinade citron & piment</span></span>
+          <span class="dots"></span><span class="price">5 500</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Gambas au feu de bois<span class="desc">Servies avec beurre à l'ail</span></span>
+          <span class="dots"></span><span class="price">7 500</span>
+        </div>
+
+        <div class="menu-cat" style="margin-top:48px;">Accompagnements</div>
+        <div class="menu-item">
+          <span class="name">Plantain à la poêle<span class="desc"></span></span>
+          <span class="dots"></span><span class="price">1 500</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Pommes frites<span class="desc"></span></span>
+          <span class="dots"></span><span class="price">1 500</span>
+        </div>
+      </div>
+      <div>
+        <div class="menu-cat">Boissons</div>
+        <div class="menu-item">
+          <span class="name">Jus de fruits frais<span class="desc">Ananas, gingembre ou bissap</span></span>
+          <span class="dots"></span><span class="price">1 200</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Jus de noix de coco<span class="desc">Coco fraîche ouverte sur place</span></span>
+          <span class="dots"></span><span class="price">1 000</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Bière<span class="desc">Bien fraîche, servie sur le sable</span></span>
+          <span class="dots"></span><span class="price">1 000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="galerie">
+  <div class="gallery-grid">
+    <div class="gcell">
+      <img src="https://images.pexels.com/photos/30971142/pexels-photo-30971142.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Plage tropicale avec palmiers">
+      <div class="cap">Vue sur la plage</div>
+    </div>
+    <div class="gcell wide">
+      <img src="https://images.pexels.com/photos/11653557/pexels-photo-11653557.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Poisson grillé entier avec légumes">
+      <div class="cap">Poisson braisé du jour</div>
+    </div>
+    <div class="gcell">
+      <img src="https://images.pexels.com/photos/12548555/pexels-photo-12548555.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Noix de coco fraîche avec paille sur table en bois">
+      <div class="cap">Jus de noix de coco</div>
+    </div>
+    <div class="gcell">
+      <img src="https://images.pexels.com/photos/7364105/pexels-photo-7364105.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Langouste grillée sur assiette">
+      <div class="cap">Langouste grillée</div>
+    </div>
+    <div class="gcell">
+      <img src="https://images.pexels.com/photos/29617469/pexels-photo-29617469.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Poisson et crevettes grillés">
+      <div class="cap">Crevettes grillées</div>
+    </div>
+    <div class="gcell wide">
+      <img src="https://images.pexels.com/photos/3493814/pexels-photo-3493814.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Coucher de soleil sur la plage avec palmiers">
+      <div class="cap">Coucher de soleil sur la plage</div>
+    </div>
+  </div>
+</section>
+
+<section class="testi">
+  <div class="wrap testi-wrap">
+    <blockquote>« Le poisson le plus frais que j'ai mangé au Cameroun, servi avec les pieds dans le sable. Une adresse à ne pas manquer à Kribi. »</blockquote>
+    <cite>— Marc D., touriste de passage</cite>
+  </div>
+</section>
+
+<section class="reserve" id="reserver">
+  <div class="wrap">
+    <div class="reserve-grid">
+      <div>
+        <h2>Réservez votre table</h2>
+        <p>Nous vous recommandons de réserver à l'avance, surtout le week-end et pour les groupes de plus de 6 personnes.</p>
+        <div class="hours">
+          <div><span>Tous les jours</span><span>10h – 22h</span></div>
+          <div><span>Weekend</span><span>Ouverture prolongée selon affluence</span></div>
+        </div>
+      </div>
+      <form id="reserveForm" onsubmit="return sendReservation(event);">
+        <div class="form-row">
+          <div>
+            <label for="name">Nom complet</label>
+            <input id="name" type="text" placeholder="Votre nom" required>
+          </div>
+          <div>
+            <label for="phone">Téléphone</label>
+            <input id="phone" type="tel" placeholder="+237 6XX XXX XXX" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="date">Date</label>
+            <input id="date" type="date" required>
+          </div>
+          <div>
+            <label for="time">Heure</label>
+            <input id="time" type="time" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="guests">Nombre de personnes</label>
+            <select id="guests">
+              <option>1 personne</option>
+              <option selected>2 personnes</option>
+              <option>3 personnes</option>
+              <option>4 personnes</option>
+              <option>5+ personnes</option>
+            </select>
+          </div>
+          <div>
+            <label for="occasion">Occasion (optionnel)</label>
+            <input id="occasion" type="text" placeholder="Anniversaire, dîner d'affaires...">
+          </div>
+        </div>
+        <div>
+          <label for="note">Demande particulière</label>
+          <textarea id="note" placeholder="Allergies, préférences de placement..."></textarea>
+        </div>
+        <button class="form-submit" type="submit">Confirmer la réservation</button>
+        <p class="form-note">Vous recevrez une confirmation par SMS sous quelques minutes.</p>
+      </form>
+      <div id="confirm" style="display:none;">
+        <h2>Presque !</h2>
+        <p>Une fenêtre WhatsApp vient de s'ouvrir avec votre demande pré-remplie. Il ne vous reste qu'à appuyer sur envoyer.</p>
+        <p style="margin-top:14px;">La fenêtre ne s'est pas ouverte ? <a id="waFallback" href="#" style="text-decoration:underline;">Cliquez ici</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Numéro WhatsApp du restaurant, format international sans le +
+  const RESTAURANT_WHATSAPP_NUMBER = "237690748115";
+
+  function sendReservation(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const guests = document.getElementById('guests').value;
+    const occasion = document.getElementById('occasion').value.trim();
+    const note = document.getElementById('note').value.trim();
+
+    if (!name || !phone || !date || !time) {
+      alert("Merci de remplir au moins le nom, le téléphone, la date et l'heure.");
+      return false;
+    }
+
+    let message = `Bonjour, je souhaite réserver une table à Kribi La Marseillaise.\n\n`;
+    message += `Nom : ${name}\n`;
+    message += `Téléphone : ${phone}\n`;
+    message += `Date : ${date}\n`;
+    message += `Heure : ${time}\n`;
+    message += `Nombre de personnes : ${guests}\n`;
+    if (occasion) message += `Occasion : ${occasion}\n`;
+    if (note) message += `Demande particulière : ${note}\n`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const waUrl = `https://wa.me/${RESTAURANT_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+    document.getElementById('waFallback').href = waUrl;
+    document.getElementById('reserveForm').style.display = 'none';
+    document.getElementById('confirm').style.display = 'block';
+
+    window.location.href = waUrl;
+
+    return false;
+  }
+</script>
+
+<section class="location">
+  <div class="wrap">
+    <div class="loc-grid">
+      <div class="loc-info">
+        <h3>Nous trouver</h3>
+        <p>Plage de Kribi</p>
+        <p>Kribi, Cameroun</p>
+        <p style="margin-top:18px;">+237 6 90 74 81 15</p>
+        <p>contact@kribilamarseillaise.cm</p>
+      </div>
+      <div class="loc-map"><div class="pin"></div></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Kribi La Marseillaise</h4>
+        <p style="max-width:220px;">Poissons et fruits de mer grillés au feu de bois, sur la plage de Kribi.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <a href="#apropos">L'histoire</a>
+        <a href="#menu">Menu</a>
+        <a href="#galerie">Galerie</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="tel:+237690748115">+237 6 90 74 81 15</a>
+        <a href="mailto:contact@kribilamarseillaise.cm">contact@kribilamarseillaise.cm</a>
+      </div>
+      <div class="foot-col">
+        <h4>Suivez-nous</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Kribi La Marseillaise. Tous droits réservés.</span>
+      <span>Site conçu avec soin à Kribi.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
